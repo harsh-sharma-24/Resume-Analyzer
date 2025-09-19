@@ -45,26 +45,20 @@ To run this project locally, follow these steps:
 
 1. Clone the repository:
 
-git clone [https://github.com/your-username/resume-analyzer.git](https://github.com/your-username/resume-analyzer.git)
+git clone (https://github.com/harsh-sharma-24/Resume-Analyzer)
 cd resume-analyzer
 
 2. Create and activate a virtual environment:
 
-# For Windows
 python -m venv venv
 .\venv\Scripts\activate
-
-# For macOS/Linux
-python3 -m venv venv
-source venv/bin/activate
 
 3. Install dependencies:
 Create a requirements.txt file with the following content:
 
 flask
-werkzeug
 spacy
-# Add other PDF and NLP libraries you are using e.g., PyMuPDF, torch
+pypdf2
 
 Then, install the requirements:
 
