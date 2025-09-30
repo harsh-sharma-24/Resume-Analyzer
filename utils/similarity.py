@@ -1,7 +1,11 @@
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
+import os
 
-model = SentenceTransformer("all-MiniLM-L6-v2")
+model = SentenceTransformer(
+    "all-MiniLM-L6-v2",
+    cache_folder=os.path.join(os.getcwd(), "models")
+)
 
 def compute_similarity(resume_text: str, jd_text: str) -> float:
     """
