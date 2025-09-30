@@ -9,7 +9,7 @@ def compute_similarity(resume_text: str, jd_text: str) -> float:
     Returns a score between 0 and 1.
     """
     if not resume_text.strip() or not jd_text.strip():
-        return 0.0  # handle empty text
+        return 0.0
 
     resume_emb = model.encode([resume_text])
     jd_emb = model.encode([jd_text])

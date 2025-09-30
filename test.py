@@ -28,16 +28,14 @@ def main():
     percentage = ((score - min_score) / (max_score - min_score)) * 100
 
     # Use Min Max Scaler to get the best results  
-    print("\n📄 Resume Parsed:", resume_info)
-    print("\n📄 JD Parsed:", jd_info)
+    print("\nResume Parsed:", resume_info)
+    print("\nJD Parsed:", jd_info)
     print(f"\n Orignal Score : {score}" )
-    print(f"\n✅ Resume ↔ JD Match Score: {percentage}%")
-# AFTER (Correct)
+    print(f"\nResume ↔ JD Match Score: {percentage}%")
     skill_gap = analyze_skill_gap(resume_info, jd_info)
-    print("\n=== Skill Gap Analysis ===")
     print("Resume Skills:", skill_gap["resume_skills"])
     print("JD Skills:", skill_gap["jd_skills"])
-    print("Matched Skills:", skill_gap["matched_skills"])
+    print(" Matched Skills:", skill_gap["matched_skills"])
     print("Missing Skills:", skill_gap["missing_skills"])
     print("Extra Skills (not in JD):", skill_gap["extra_skills"])
 if __name__ == "__main__":
