@@ -1,11 +1,9 @@
 import os
 from flask import Flask,request,render_template
 from utils.analyzer import analyze_resume
-
 app = Flask(__name__)
 upload_folder = "uploads"
 os.makedirs(upload_folder,exist_ok=True)
-
 @app.route("/" , methods = ["GET","POST"])
 def index():
     result = None
