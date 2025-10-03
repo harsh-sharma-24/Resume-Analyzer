@@ -10,7 +10,7 @@ def analyze_skill_gap(resume_data, jd_data):
 
     matched_skills = resume_skills.intersection(jd_skills)
     missing_skills = jd_skills - resume_skills
-    extra_skills = resume_skills - jd_skills  # skills candidate has but not in JD
+    extra_skills = resume_skills - jd_skills  
 
     return {
         "resume_skills": list(resume_skills),

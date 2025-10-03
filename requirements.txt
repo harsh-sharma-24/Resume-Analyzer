@@ -13,3 +13,4 @@ gunicorn==21.2.0
 spacy==3.7.2
 python-dotenv==1.0.1
 python -m spacy download en_core_web_sm
+langchain-openai
