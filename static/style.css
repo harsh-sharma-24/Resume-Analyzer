@@ -1,0 +1,88 @@
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f7f6;
+    color: #444;
+}
+
+.card {
+    border-radius: 1rem;
+    transition: all 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1) !important;
+}
+
+.btn-primary {
+    background-image: linear-gradient(to right, #4e54c8, #8f94fb);
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 15px rgba(118, 124, 251, 0.4);
+}
+
+.form-control-lg {
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+}
+
+/* Circular Progress Bar */
+.progress-circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: conic-gradient(
+        #4e54c8 calc(var(--value) * 1%),
+        #e9ecef 0
+    );
+    position: relative;
+    animation: progress-animation 2s ease-out forwards;
+}
+
+.progress-circle::before {
+    content: '';
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    background: #fff;
+    border-radius: 50%;
+}
+
+.progress-value {
+    position: relative;
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #4e54c8;
+}
+
+@keyframes progress-animation {
+    from {
+        --value: 0;
+    }
+}
+
+
+.skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.badge {
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 0.5rem;
+}
+
+.card-header {
+    font-size: 1.1rem;
+}

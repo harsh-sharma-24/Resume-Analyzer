@@ -2,65 +2,134 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Resume Analyzer</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body class="bg-light">
-<div class="container py-5">
-    <h1 class="text-center mb-4">Smart Resume Analyzer</h1>
-
-    <form method="POST" enctype="multipart/form-data" class="card p-4 shadow-sm bg-white">
-        <div class="mb-3">
-            <label class="form-label">Upload Resume (PDF):</label>
-            <input type="file" class="form-control" name="resume" required>
+<body>
+    <div class="container my-5">
+        <div class="text-center mb-5">
+            <h1 class="display-4 fw-bold">Smart Resume Analyzer</h1>
+            <p class="lead text-muted">Upload a resume and job description to see the magic happen!</p>
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">Upload Job Description (PDF):</label>
-            <input type="file" class="form-control" name="jd" required>
-        </div>
-
-        <button type="submit" class="btn btn-primary w-100">Analyze</button>
-    </form>
-
-    {% if result %}
-        <div class="card mt-4 shadow-sm">
-            <div class="card-body">
-                <h2 class="card-title">Results</h2>
-                <p><strong>Eligible:</strong> {{ result['eligible'] }}</p>
-                <p><strong>Similarity Score:</strong> {{ result['similarity_score'] }}%</p>
-
-                <h4>Skills Analysis</h4>
-                <div class="row">
-                    <div class="col-md-6">
-                        <h5 class="text-success">Matched Skills</h5>
-                        <ul class="list-group">
-                            {% for skill in result['skills'].get('matched_skills', []) %}
-                                <li class="list-group-item">{{ skill }}</li>
-                            {% endfor %}
-                        </ul>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-lg border-0">
+                    <div class="card-body p-4 p-md-5">
+                        <form method="POST" enctype="multipart/form-data">
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <label for="resume" class="form-label fw-medium"><i class="bi bi-file-earmark-person me-2"></i>Upload Resume (PDF)</label>
+                                    <input type="file" class="form-control form-control-lg" name="resume" id="resume" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="jd" class="form-label fw-medium"><i class="bi bi-file-earmark-text me-2"></i>Upload Job Description (PDF)</label>
+                                    <input type="file" class="form-control form-control-lg" name="jd" id="jd" required>
+                                </div>
+                                <div class="col-12 mt-4">
+                                    <button type="submit" class="btn btn-primary btn-lg w-100 py-2">
+                                        <i class="bi bi-robot me-2"></i>Analyze Now
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                    <div class="col-md-6">
-                        <h5 class="text-danger">Missing Skills</h5>
-                        <ul class="list-group">
-                            {% for skill in result['skills'].get('missing_skills', []) %}
-                                <li class="list-group-item">{{ skill }}</li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                    <div class="col-md-12 mt-3">
-                        <h5 class="text-primary">Extra Skills (Present in Resume but not in JD)</h5>
-                        <ul class="list-group">
-                            {% for skill in result['skills'].get('extra_skills', []) %}
-                                <li class="list-group-item">{{ skill }}</li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-
                 </div>
             </div>
         </div>
-    {% endif %}
-</div>
+
+        {% if result %}
+        <div class="results-section mt-5">
+            <h2 class="text-center mb-4 fw-bold">Analysis Results</h2>
+            <div class="row g-4">
+                <div class="col-lg-4">
+                     <div class="card h-100 shadow border-0 text-center">
+                        <div class="card-header bg-transparent border-0 pt-4">
+                           <h5 class="card-title fw-bold">Eligibility</h5>
+                        </div>
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            {% if result['eligible']|lower == 'yes' %}
+                                <i class="bi bi-check-circle-fill text-success display-1"></i>
+                                <p class="fs-4 mt-3 fw-semibold text-success">Eligible</p>
+                            {% else %}
+                                <i class="bi bi-x-circle-fill text-danger display-1"></i>
+                                <p class="fs-4 mt-3 fw-semibold text-danger">Not Eligible</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                 <div class="col-lg-4">
+                    <div class="card h-100 shadow border-0 text-center">
+                         <div class="card-header bg-transparent border-0 pt-4">
+                           <h5 class="card-title fw-bold">Similarity Score</h5>
+                        </div>
+                        <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                            <div class="progress-circle" style="--value:{{ result['similarity_score'] }}">
+                                <span class="progress-value">{{ result['similarity_score'] }}%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card h-100 shadow border-0">
+                        <div class="card-header bg-info-subtle text-info-emphasis fw-bold">
+                            <i class="bi bi-plus-circle me-2"></i>Extra Skills
+                        </div>
+                        <div class="card-body">
+                            <div class="skills-container">
+                                {% for skill in result['skills'].get('extra_skills', []) %}
+                                    <span class="badge bg-info-subtle text-info-emphasis p-2 m-1">{{ skill }}</span>
+                                {% else %}
+                                    <p class="text-muted small">No extra skills found in the resume.</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-4 mt-2">
+                <div class="col-lg-6">
+                    <div class="card h-100 shadow border-0">
+                        <div class="card-header bg-success-subtle text-success-emphasis fw-bold">
+                           <i class="bi bi-check2-all me-2"></i>Matched Skills
+                        </div>
+                        <div class="card-body">
+                            <div class="skills-container">
+                                {% for skill in result['skills'].get('matched_skills', []) %}
+                                    <span class="badge bg-success-subtle text-success-emphasis p-2 m-1">{{ skill }}</span>
+                                {% else %}
+                                    <p class="text-muted small">No skills matched the job description.</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card h-100 shadow border-0">
+                        <div class="card-header bg-danger-subtle text-danger-emphasis fw-bold">
+                            <i class="bi bi-exclamation-triangle me-2"></i>Missing Skills
+                        </div>
+                        <div class="card-body">
+                            <div class="skills-container">
+                                {% for skill in result['skills'].get('missing_skills', []) %}
+                                    <span class="badge bg-danger-subtle text-danger-emphasis p-2 m-1">{{ skill }}</span>
+                                {% else %}
+                                    <p class="text-muted small">Congratulations! No skills are missing.</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
 </body>
 </html>
